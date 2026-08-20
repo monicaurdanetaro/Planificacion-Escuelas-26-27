@@ -23,8 +23,8 @@
     --c-servicio-1:#753CBE;
     --c-servicio-2:#E81D75;
     --c-servicio-3:#00A0E0;
-    --c-excelencia-1:#1B99D4;
-    --c-excelencia-2:#8C9A2E;
+    --c-excelencia-1:#6FA130;
+    --c-excelencia-2:#1B99D4;
 
     --cad-trimestral:#001E62;
     --cad-mensual:#418FDE;
@@ -152,7 +152,7 @@
   }
   .school-card.comercial .school-tag{color:var(--c-comercial-1); background:rgba(0,161,155,.1);}
   .school-card.servicio .school-tag{color:var(--c-servicio-1); background:rgba(117,60,190,.1);}
-  .school-card.excelencia .school-tag{color:var(--c-excelencia-1); background:rgba(27,153,212,.1);}
+  .school-card.excelencia .school-tag{color:var(--c-excelencia-1); background:rgba(111,161,48,.12);}
   .focus-label{
     font-family:'Inter',sans-serif; font-size:10px; font-weight:600; letter-spacing:.06em;
     text-transform:uppercase; color:var(--muted); margin:0 0 10px;
@@ -173,15 +173,24 @@
   .cal-head{display:flex; align-items:baseline; justify-content:space-between; flex-wrap:wrap; gap:12px; margin-bottom:14px;}
   .cal-head h2{font-family:'Poppins',sans-serif; font-size:24px; font-weight:800; color:var(--navy); margin:0;}
   .cal-head p{margin:4px 0 0; color:var(--muted); font-size:14px;}
-  .wip-banner{
-    display:flex; align-items:center; gap:10px; background:rgba(253,215,86,.16); border:1px solid rgba(185,138,0,.3);
-    color:#7A5A00; font-size:13px; font-weight:600; padding:10px 16px; border-radius:12px; margin-bottom:20px;
+  .cal-tabs{margin-bottom:20px;}
+  .cal-tab{
+    font-family:'Inter',sans-serif; font-weight:600; font-size:13.5px; color:var(--muted);
+    background:transparent; border:none; padding:10px 18px; border-radius:10px; cursor:pointer; transition:all .2s ease;
   }
-  .wip-banner .dot{width:8px; height:8px; border-radius:50%; background:#B98A00; flex-shrink:0; animation:pulse 1.8s ease-in-out infinite;}
-  @keyframes pulse{0%,100%{opacity:1;} 50%{opacity:.35;}}
+  .cal-tab.active{background:#fff; color:var(--navy); box-shadow:0 4px 14px rgba(10,25,60,.12);}
+  .cal-tab:hover:not(.active){color:var(--navy);}
+  .cal-panel{display:none;}
+  .cal-panel.active{display:block; animation:fade .35s ease;}
+
+  th.th-refuerzo{position:relative; padding-bottom:26px;}
+  th.th-refuerzo::after{
+    content:'Actividad de refuerzo ES / EC'; position:absolute; bottom:3px; left:50%; transform:translateX(-50%);
+    font-size:7.5px; letter-spacing:.01em; color:var(--yellow); text-transform:none; font-weight:700; white-space:nowrap;
+  }
 
   .cal-scroll{overflow-x:auto; border:1px solid var(--line); border-radius:16px; background:var(--surface);}
-  table.cal{border-collapse:collapse; width:100%; min-width:1320px; font-size:12.5px;}
+  table.cal{border-collapse:collapse; width:100%; min-width:900px; font-size:13px;}
   table.cal th, table.cal td{border-bottom:1px solid var(--line); border-right:1px solid var(--line); padding:9px 10px; vertical-align:top; text-align:left;}
   table.cal th{
     font-family:'Inter',sans-serif; font-size:10.5px; font-weight:600; letter-spacing:.04em; text-transform:uppercase;
@@ -195,10 +204,8 @@
   td.rowlabel.comercial{background:var(--c-comercial-1);}
   td.rowlabel.servicio{background:var(--c-servicio-1);}
   td.rowlabel.excelencia{background:var(--c-excelencia-1);}
-  td.rowlabel.presencial{background:#4A5568;}
   table.cal td{color:var(--ink); background:#fff;}
   table.cal td.empty{color:#C9D1DF;}
-  table.cal td.dic{background:var(--navy); color:rgba(255,255,255,.3); text-align:center; font-size:11px;}
   table.cal tr.band td{
     background:#EEF1F7; color:var(--muted); font-weight:600; font-size:12px; text-align:center; font-style:italic;
   }
@@ -207,23 +214,16 @@
   }
   table.cal tbody tr:last-child td{border-bottom:none;}
 
-  th.col-cargo, td.col-cargo{
-    position:sticky; left:118px; z-index:2; min-width:132px;
-    background:#F6F8FB;
+  th.col-cargo{
+    position:sticky; left:118px; z-index:4; min-width:132px; background:var(--navy);
   }
-  th.col-cargo{background:var(--navy); left:118px; z-index:4;}
+  table.cal td.col-cargo{
+    position:sticky; left:118px; z-index:2; min-width:132px; background:#EFEAFB !important;
+  }
   .role-chip{
     display:inline-block; font-size:11px; font-weight:700; color:#fff; padding:3px 9px;
     border-radius:7px; white-space:nowrap;
   }
-
-  .cal-note{
-    margin-top:16px; font-size:13px; color:var(--muted); background:var(--surface); border:1px solid var(--line);
-    border-radius:12px; padding:14px 18px; line-height:1.6;
-  }
-  .cal-note b{color:var(--navy);}
-  .cal-note ul{margin:8px 0 0; padding-left:18px;}
-  .cal-note li{margin-bottom:4px;}
 
   /* ===== Legend / cadence ribbon ===== */
   .legend-wrap{max-width:1180px; margin:8px auto 0; padding:0 32px;}
@@ -333,9 +333,9 @@
       <span class="school-tag">Escuela Comercial</span>
       <p class="focus-label">Focos FY 26-27</p>
       <ul class="focus-list">
-        <li>Técnica de ventas</li>
-        <li>Profesionalización de Asesoras de Belleza</li>
-        <li>Impulso del rol del Farmacéutico y personal de farmacia</li>
+        <li>Profesionalización de Asesoras de Belleza y acompañamiento del nuevo perfil</li>
+        <li>Técnicas de ventas para todos los niveles</li>
+        <li>Impulso del nuevo rol del Farmacéutico y personal de farmacia</li>
         <li>Estrategia comercial</li>
       </ul>
     </div>
@@ -355,9 +355,9 @@
       <span class="school-tag">Escuela de Excelencia</span>
       <p class="focus-label">Focos FY 26-27</p>
       <ul class="focus-list">
-        <li>Reentrenamiento de Pilares de la Operación (formación en tienda)</li>
-        <li>Refuerzo de procesos con mayor oportunidad según auditoría: inventario</li>
-        <li>Refuerzo de procesos con mayor oportunidad según auditoría: control de ingresos</li>
+        <li>Reentrenamiento y certificación de Pilares de la Operación (formación en tienda)</li>
+        <li>Refuerzo de procesos con mayor oportunidad según auditoría: inventario y control de ingresos</li>
+        <li>Medición de impacto: validar si el reentrenamiento genera desplazamiento en indicadores de auditoría</li>
       </ul>
     </div>
   </section>
@@ -366,10 +366,9 @@
     <div class="cal-head">
       <div>
         <h2>Calendario macro de cursos</h2>
-        <p>Vista mensual de la malla por escuela, agosto 2026 – agosto 2027.</p>
+        <p>Vista por semestre de la malla por escuela, agosto 2026 – agosto 2027.</p>
       </div>
     </div>
-    <div class="wip-banner"><span class="dot"></span>Borrador en construcción — algunos meses aún están por definir y pueden cambiar.</div>
 
     <div class="legend" style="margin-bottom:18px;">
       <span class="legend-title">Nivel de cargo</span>
@@ -379,87 +378,114 @@
       <span class="legend-item"><span class="legend-dot" style="background:var(--role-gerentes)"></span>Gerentes de tienda</span>
       <span class="legend-item"><span class="legend-dot" style="background:var(--role-supervisores)"></span>Supervisores</span>
     </div>
-
-    <div class="cal-scroll">
-      <table class="cal">
-        <thead>
-          <tr>
-            <th>Escuela</th><th class="col-cargo">Cargo</th>
-            <th>Ago</th><th>Sep</th><th>Oct</th><th>Nov</th><th>Dic</th>
-            <th>Ene</th><th>Feb</th><th>Mar</th><th>Abr</th><th>May</th><th>Jun</th><th>Jul</th><th>Ago</th>
-          </tr>
-        </thead>
-        <tbody>
-          <!-- COMERCIAL -->
-          <tr>
-            <td class="rowlabel comercial" rowspan="3">Comercial</td>
-            <td class="col-cargo"><span class="role-chip" style="background:var(--role-belleza)">Asesora de Belleza</span></td>
-            <td>Esmaltes LA Color</td><td>Skincare Koreano</td><td class="empty">—</td><td class="bandcell">Charla especializada</td><td class="dic">·</td>
-            <td>Ingredientes estrella 2026</td><td class="bandcell">Charla especializada</td><td>Barrera cutánea</td><td class="bandcell">Charla especializada</td><td>Skinimalism</td><td class="bandcell">Charla especializada</td><td>Cómo combinar activos sin irritar la piel</td><td class="bandcell">Charla especializada</td>
-          </tr>
-          <tr>
-            <td class="col-cargo"><span class="role-chip" style="background:var(--role-farmacia)">Farmacia</span></td>
-            <td>Probióticos</td><td class="empty">—</td><td>Vitaminas marca propia</td><td class="bandcell">Charla especializada</td><td class="dic">·</td>
-            <td class="empty">—</td><td>Salud en forma</td><td class="bandcell">Charla especializada</td><td>Agentes de diagnóstico</td><td class="bandcell">Charla especializada</td><td class="empty">—</td><td class="bandcell">Charla especializada</td><td class="empty">—</td>
-          </tr>
-          <tr>
-            <td class="col-cargo"><span class="role-chip" style="background:var(--role-todos)">Todos</span></td>
-            <td>Escucha activa y preguntas poderosas</td><td>Marca Propia</td><td>Venta adicional: cross-selling efectivo</td><td class="empty">—</td><td class="dic">·</td>
-            <td>Venta omnicanal</td><td>Manejo de objeciones con seguridad y empatía</td><td class="empty">—</td><td>Argumentación basada en beneficios</td><td class="empty">—</td><td>Cierre efectivo de ventas</td><td class="empty">—</td><td>Ética comercial</td>
-          </tr>
-
-          <!-- SERVICIO -->
-          <tr>
-            <td class="rowlabel servicio" rowspan="3">Servicio</td>
-            <td class="col-cargo"><span class="role-chip" style="background:var(--role-todos)">Todos</span></td>
-            <td class="empty">—</td><td>Qué hacer y qué no hacer · 3ra edad / Servicio bajo presión</td><td class="empty">—</td><td>Buenas prácticas: Deleite, pequeños detalles grandes experiencias</td><td class="dic">·</td>
-            <td class="empty">—</td><td class="empty">—</td><td>Buenas prácticas: La experiencia que el cliente recuerda</td><td class="empty">—</td><td>Buenas prácticas: Cómo influir positivamente en el cliente</td><td class="empty">—</td><td>Buenas prácticas: Comunicación clara y sencilla</td><td class="empty">—</td>
-          </tr>
-          <tr>
-            <td class="col-cargo"><span class="role-chip" style="background:var(--role-todos)">Todos</span></td>
-            <td class="bandcell" colspan="2">Actividad Conducta 5</td><td class="empty">—</td><td class="empty">—</td><td class="dic">·</td>
-            <td class="empty">—</td><td class="empty">—</td><td class="empty">—</td><td class="empty">—</td><td class="empty">—</td><td class="empty">—</td><td class="empty">—</td><td class="empty">—</td>
-          </tr>
-          <tr>
-            <td class="col-cargo"><span class="role-chip" style="background:var(--role-gerentes)">Gerentes de tienda</span></td>
-            <td class="empty">—</td><td>Entrenamiento facilitadores CDS</td><td class="bandcell" colspan="2">Cultura de Servicio Base</td><td class="dic">·</td>
-            <td class="bandcell">Cultura de Servicio Base</td><td>Entrenamiento facilitadores CDS</td><td class="bandcell" colspan="6">Cultura de Servicio Base</td>
-          </tr>
-
-          <!-- EXCELENCIA -->
-          <tr>
-            <td class="rowlabel excelencia" rowspan="2">Excelencia</td>
-            <td class="col-cargo"><span class="role-chip" style="background:var(--role-supervisores)">Supervisores</span></td>
-            <td>Obras sociales ARG</td><td class="empty">—</td><td>Tipificación y registro de causas en ajustes de inventario COL</td><td>Control de montos máximos en efectivo (USD) en caja registradora VEN</td><td class="dic">·</td>
-            <td>Procedimiento de devoluciones sin factura VEN y COL</td><td class="empty">—</td><td>Aplicación del manejo dinámico de precios y ofertas VEN y COL</td><td class="empty">—</td><td>Reporte de diferencias en pedidos CENDIS dentro del tiempo establecido</td><td class="empty">—</td><td class="empty">—</td><td class="empty">—</td>
-          </tr>
-          <tr>
-            <td class="col-cargo"><span class="role-chip" style="background:var(--role-todos)">Todos</span></td>
-            <td class="empty">—</td><td class="empty">—</td><td class="bandcell" colspan="2">Reentrenamiento Pilares de la Operación</td><td class="dic">·</td>
-            <td class="bandcell" colspan="8">Reentrenamiento Pilares de la Operación</td>
-          </tr>
-
-          <!-- PRESENCIAL -->
-          <tr class="band">
-            <td class="rowlabel presencial" colspan="2">Presencial</td>
-            <td colspan="4">Charlas de ventas / asesoría</td>
-            <td class="dic">·</td>
-            <td colspan="8">Charlas especializadas con proveedores según cargo y necesidad</td>
-          </tr>
-
-        </tbody>
-      </table>
+    <div class="legend" style="margin-bottom:18px;">
+      <span class="legend-title">Formato</span>
+      <span class="legend-item"><span class="legend-dot" style="background:#94A0BC"></span>Presencial / síncrono — Cultura de Servicio Base, Entrenamiento facilitadores CDS, Reentrenamiento Pilares, Charla especializada</span>
+      <span class="legend-item"><span class="legend-dot" style="background:#001E62"></span>Asíncrono (curso autogestionado)</span>
+      <span class="legend-item"><span class="legend-dot" style="background:var(--yellow)"></span>Actividad de refuerzo ES / EC — marcada bajo el mes de cierre de cada trimestre</span>
     </div>
 
-    <div class="cal-note">
-      <b>Pendiente por completar en este calendario:</b>
-      <ul>
-        <li>Formaciones presenciales de asesoras de belleza, dermo y OTC con proveedores (meses, proveedores y metodología)</li>
-        <li>Frecuencia de actividades de refuerzo (propuesta: cada 2 meses)</li>
-        <li>Fecha de Cultura de Servicio para personal base</li>
-        <li>Píldoras asíncronas de código de conducta</li>
-        <li>Meses y cantidad de grupos para las charlas de ventas</li>
-      </ul>
+    <div class="tabs cal-tabs" role="tablist">
+      <button class="cal-tab active" data-caltab="s1">S1 · Ago – Ene</button>
+      <button class="cal-tab" data-caltab="s2">S2 · Feb – Jul</button>
+    </div>
+
+    <!-- ===== S1 ===== -->
+    <div class="cal-panel active" id="calpanel-s1">
+      <div class="cal-scroll">
+        <table class="cal">
+          <thead>
+            <tr>
+              <th>Escuela</th><th class="col-cargo">Cargo</th>
+              <th>Ago</th><th>Sep</th><th class="th-refuerzo">Oct</th><th>Nov</th><th class="th-refuerzo">Ene</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="rowlabel comercial" rowspan="3">Comercial</td>
+              <td class="col-cargo"><span class="role-chip" style="background:var(--role-belleza)">Asesora de Belleza</span></td>
+              <td>Esmaltes LA Color</td><td>Skincare Koreano</td><td class="empty">—</td><td class="bandcell">Charla especializada</td><td>Ingredientes estrella 2026</td>
+            </tr>
+            <tr>
+              <td class="col-cargo"><span class="role-chip" style="background:var(--role-farmacia)">Farmacia</span></td>
+              <td>Probióticos</td><td class="empty">—</td><td>Vitaminas marca propia</td><td class="bandcell">Charla especializada</td><td class="empty">—</td>
+            </tr>
+            <tr>
+              <td class="col-cargo"><span class="role-chip" style="background:var(--role-todos)">Todos</span></td>
+              <td>Escucha activa y preguntas poderosas</td><td>Marca Propia</td><td>Venta adicional: cross-selling efectivo</td><td class="empty">—</td><td>Venta omnicanal</td>
+            </tr>
+
+            <tr>
+              <td class="rowlabel servicio" rowspan="2">Servicio</td>
+              <td class="col-cargo"><span class="role-chip" style="background:var(--role-todos)">Todos</span></td>
+              <td class="empty">—</td><td>Qué hacer y qué no hacer · 3ra edad / Servicio bajo presión</td><td class="empty">—</td><td>Buenas prácticas: Deleite, pequeños detalles grandes experiencias</td><td class="empty">—</td>
+            </tr>
+            <tr>
+              <td class="col-cargo"><span class="role-chip" style="background:var(--role-gerentes)">Gerentes de tienda</span></td>
+              <td class="empty">—</td><td class="bandcell">Entrenamiento facilitadores CDS</td><td class="bandcell" colspan="3">Cultura de Servicio Base</td>
+            </tr>
+
+            <tr>
+              <td class="rowlabel excelencia" rowspan="2">Excelencia</td>
+              <td class="col-cargo"><span class="role-chip" style="background:var(--role-supervisores)">Supervisores</span></td>
+              <td>Obras sociales ARG</td><td class="empty">—</td><td>Tipificación y registro de causas en ajustes de inventario COL</td><td>Control de montos máximos en efectivo (USD) en caja registradora VEN</td><td>Procedimiento de devoluciones sin factura VEN y COL</td>
+            </tr>
+            <tr>
+              <td class="col-cargo"><span class="role-chip" style="background:var(--role-todos)">Todos</span></td>
+              <td class="empty">—</td><td class="empty">—</td><td class="bandcell" colspan="3">Reentrenamiento Pilares de la Operación</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ===== S2 ===== -->
+    <div class="cal-panel" id="calpanel-s2">
+      <div class="cal-scroll">
+        <table class="cal">
+          <thead>
+            <tr>
+              <th>Escuela</th><th class="col-cargo">Cargo</th>
+              <th>Feb</th><th>Mar</th><th class="th-refuerzo">Abr</th><th>May</th><th>Jun</th><th class="th-refuerzo">Jul</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="rowlabel comercial" rowspan="3">Comercial</td>
+              <td class="col-cargo"><span class="role-chip" style="background:var(--role-belleza)">Asesora de Belleza</span></td>
+              <td class="bandcell">Charla especializada</td><td>Barrera cutánea</td><td class="bandcell">Charla especializada</td><td>Skinimalism</td><td class="bandcell">Charla especializada</td><td>Cómo combinar activos sin irritar la piel</td>
+            </tr>
+            <tr>
+              <td class="col-cargo"><span class="role-chip" style="background:var(--role-farmacia)">Farmacia</span></td>
+              <td>Salud en forma</td><td class="bandcell">Charla especializada</td><td>Agentes de diagnóstico</td><td class="empty">—</td><td class="empty">—</td><td class="bandcell">Charla especializada</td>
+            </tr>
+            <tr>
+              <td class="col-cargo"><span class="role-chip" style="background:var(--role-todos)">Todos</span></td>
+              <td>Manejo de objeciones con seguridad y empatía</td><td class="empty">—</td><td>Argumentación basada en beneficios</td><td class="empty">—</td><td>Cierre efectivo de ventas</td><td class="empty">—</td>
+            </tr>
+
+            <tr>
+              <td class="rowlabel servicio" rowspan="2">Servicio</td>
+              <td class="col-cargo"><span class="role-chip" style="background:var(--role-todos)">Todos</span></td>
+              <td class="empty">—</td><td>Buenas prácticas: La experiencia que el cliente recuerda</td><td class="empty">—</td><td>Buenas prácticas: Cómo influir positivamente en el cliente</td><td class="empty">—</td><td>Buenas prácticas: Comunicación clara y sencilla</td>
+            </tr>
+            <tr>
+              <td class="col-cargo"><span class="role-chip" style="background:var(--role-gerentes)">Gerentes de tienda</span></td>
+              <td class="bandcell">Entrenamiento facilitadores CDS</td><td class="bandcell" colspan="5">Cultura de Servicio Base</td>
+            </tr>
+
+            <tr>
+              <td class="rowlabel excelencia" rowspan="2">Excelencia</td>
+              <td class="col-cargo"><span class="role-chip" style="background:var(--role-supervisores)">Supervisores</span></td>
+              <td class="empty">—</td><td>Aplicación del manejo dinámico de precios y ofertas VEN y COL</td><td class="empty">—</td><td>Reporte de diferencias en pedidos CENDIS dentro del tiempo establecido</td><td class="empty">—</td><td class="empty">—</td>
+            </tr>
+            <tr>
+              <td class="col-cargo"><span class="role-chip" style="background:var(--role-todos)">Todos</span></td>
+              <td class="bandcell" colspan="6">Reentrenamiento Pilares de la Operación</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   </section>
 </div>
@@ -530,8 +556,8 @@
           <p>Mantener comunicaciones mensuales por todas las vías disponibles para que el avance de la gamificación se sienta constante.</p>
         </div>
         <div class="card">
-          <div class="card-top"><h3>Actividades de refuerzo / trivias</h3><span class="chip" style="background:var(--cad-continuo)">Por validar frecuencia</span></div>
-          <p>Reforzar contenidos ya publicados con retos cortos y trivias; queda por validar la frecuencia ideal.</p>
+          <div class="card-top"><h3>Actividades de refuerzo / trivias</h3><span class="chip" style="background:var(--cad-continuo)">Periódico</span></div>
+          <p>Charlas especializadas presenciales que alternan con la malla de cursos de Comercial, varias veces al año.</p>
         </div>
       </div>
     </div>
@@ -587,6 +613,18 @@
       panels.forEach(p => p.classList.remove('active'));
       tab.classList.add('active');
       document.getElementById('panel-' + tab.dataset.tab).classList.add('active');
+    });
+  });
+
+  // Calendar quarter tabs (Q1 / Q2 / Q3 / Q4)
+  const calTabs = document.querySelectorAll('.cal-tab');
+  const calPanels = document.querySelectorAll('.cal-panel');
+  calTabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      calTabs.forEach(t => t.classList.remove('active'));
+      calPanels.forEach(p => p.classList.remove('active'));
+      tab.classList.add('active');
+      document.getElementById('calpanel-' + tab.dataset.caltab).classList.add('active');
     });
   });
 </script>
